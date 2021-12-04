@@ -2,7 +2,6 @@ package top.gotoeasy.framework.converter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +19,24 @@ import top.gotoeasy.framework.converter.util.ClsUtil;
 @Slf4j
 public class Converter {
 
-    public static void main(String... args) {
-        System.err.println(Converter.fromTo("True", Boolean.class));
-        System.err.println(Converter.fromTo(0, Boolean.class));
-        System.err.println(Converter.fromTo(new BigDecimal("12345.678"), int.class));
+    //    public static void main(String... args) {
+    //        System.err.println(Converter.fromTo("True", Boolean.class));
+    //        System.err.println(Converter.fromTo(0, Boolean.class));
+    //        System.err.println(Converter.fromTo(new BigDecimal("12345.678"), int.class));
+    //    }
+
+    /**
+     * 判断是否能转换
+     * 
+     * @param from    转换前对象
+     * @param toClass 转换目标类
+     * @return true:能转换/false:不能转换
+     */
+    public static boolean canConvert(Object from, Class<?> toClass) {
+        if (from == null || toClass.isInstance(from)) {
+            return true;
+        }
+        return mapConverter.containsKey(getConvertKey(from, toClass));
     }
 
     /**
